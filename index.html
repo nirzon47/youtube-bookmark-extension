@@ -6,13 +6,27 @@
 		<title>YouTube Bookmarker</title>
 		<link rel="stylesheet" href="style.css" />
 	</head>
-	<body class="p-6 text-center">
+	<body class="p-6 text-center text-lg">
 		<h1 class="text-xl font-bold text-zinc-600 drop-shadow mb-4">
 			YouTube Bookmarker
 		</h1>
 		<ul class="">
 			<!-- Mockup data -->
-			<li class="font-medium">Bookmark 1</li>
+			<li class="font-medium flex justify-between items-center">
+				<h2>Bookmark 1</h2>
+				<div class="flex flex-row gap-2">
+					<button
+						class="p-2 bg-blue-300 hover:bg-blue-400 rounded-lg duration-200"
+					>
+						<img src="assets/redirect.svg" alt="Go to timestamp" />
+					</button>
+					<button
+						class="p-2 bg-red-300 hover:bg-red-400 duration-200 rounded-lg"
+					>
+						<img src="assets/delete.svg" alt="Delete timestamp" />
+					</button>
+				</div>
+			</li>
 		</ul>
 	</body>
 </html>
