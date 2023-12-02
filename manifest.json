@@ -2,7 +2,13 @@
 	"manifest_version": 3,
 	"name": "YouTube Bookmarker",
 	"description": "Bookmark your YouTube video timestamps",
-	"version": "1.0",
+	"version": "0.1",
+	"icons": {
+		"16": "assets/icon.png",
+		"24": "assets/icon.png",
+		"32": "assets/icon.png",
+		"48": "assets/icon.png"
+	},
 	"action": {
 		"default_popup": "popup.html",
 		"default_icon": {
