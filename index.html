@@ -6,44 +6,32 @@
 		<title>YouTube Bookmarker</title>
 		<link rel="stylesheet" href="style.css" />
 	</head>
-	<body class="p-6 text-center text-lg">
+	<body class="p-6 text-lg text-center">
 		<!-- Youtube page -->
 		<section>
-			<h1 class="text-xl font-bold text-zinc-600 drop-shadow mb-4">
+			<h1 class="mb-6 text-xl font-bold text-zinc-600 drop-shadow">
 				Bookmarks on this video
 			</h1>
 			<ul class="flex flex-col gap-y-2">
 				<!-- Mockup data -->
-				<li
-					class="font-medium flex justify-between items-center outline-1 outline-zinc-600 outline px-4 py-2 rounded-lg drop-shadow shadow hover:bg-zinc-100 duration-200"
-				>
+				<li class="item">
 					<h2>Bookmark 1</h2>
-					<div class="flex flex-row gap-2">
-						<button
-							class="p-2 bg-blue-300 hover:bg-blue-400 rounded-lg duration-200"
-						>
+					<div class="btn-group">
+						<button class="goto-btn">
 							<img src="assets/redirect.svg" alt="Go to timestamp" />
 						</button>
-						<button
-							class="p-2 bg-red-300 hover:bg-red-400 duration-200 rounded-lg"
-						>
+						<button class="del-btn">
 							<img src="assets/delete.svg" alt="Delete timestamp" />
 						</button>
 					</div>
 				</li>
-				<li
-					class="font-medium flex justify-between items-center outline-1 outline-zinc-600 outline px-4 py-2 rounded-lg drop-shadow shadow hover:bg-zinc-100 duration-200"
-				>
+				<li class="item">
 					<h2>Bookmark 2</h2>
-					<div class="flex flex-row gap-2">
-						<button
-							class="p-2 bg-blue-300 hover:bg-blue-400 rounded-lg duration-200"
-						>
+					<div class="btn-group">
+						<button class="goto-btn">
 							<img src="assets/redirect.svg" alt="Go to timestamp" />
 						</button>
-						<button
-							class="p-2 bg-red-300 hover:bg-red-400 duration-200 rounded-lg"
-						>
+						<button class="del-btn">
 							<img src="assets/delete.svg" alt="Delete timestamp" />
 						</button>
 					</div>
