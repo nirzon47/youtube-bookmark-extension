@@ -18,5 +18,19 @@
 			"48": "assets/icon.png"
 		},
 		"default_title": "YouTube Bookmarker"
-	}
+	},
+	"content_scripts": [
+		{
+			"matches": ["https://*.youtube.com/*"],
+			"js": ["content-script.js"]
+		}
+	],
+
+	"permissions": ["storage", "tabs"],
+	"web_accessible_resources": [
+		{
+			"resources": ["assets/add.svg"],
+			"matches": ["https://*.youtube.com/*"]
+		}
+	]
 }
