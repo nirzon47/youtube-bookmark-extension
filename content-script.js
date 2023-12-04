@@ -1,5 +1,20 @@
-let currentVideo = ''
 let youtubePlayer, youtubeControls
+let currentVideo = ''
+let bookmarks = []
+
+const init = async () => {
+	bookmarks = await fetchBookmarks()
+}
+
+const fetchBookmarks = () => {
+	return new Promise((resolve, reject) => {
+		chrome.storage.sync.get([currentVideo], (data) => {
+			resolve(data[currentVideo] ? JSON.parse(data[currentVideo]) : [])
+		})
+	})
+}
+
+init()
 
 const timestampButton = document.createElement('button')
 const buttonImage = document.createElement('img')
@@ -28,5 +43,34 @@ youtubePlayer = document.getElementsByClassName('video-stream')[0]
 youtubeControls.appendChild(timestampButton)
 
 timestampButton.addEventListener('click', () => {
-	console.log('click')
+	addBookmark()
 })
+
+const addBookmark = async () => {
+	const currentTime = youtubePlayer.currentTime
+	const bookmark = {
+		time: currentTime,
+		desc: `Bookmark at ${getDescTime(currentTime)}`,
+	}
+
+	bookmarks = await fetchBookmarks()
+
+	if (bookmarks.includes(bookmark)) {
+		return
+	}
+
+	bookmarks.push(bookmark)
+	bookmarks.sort((o1, o2) => o1.time - o2.time)
+	chrome.storage.sync.set({
+		currentVideo: JSON.stringify(bookmarks),
+	})
+
+	console.log(chrome.storage.sync.get(currentVideo))
+}
+
+const getDescTime = (time) => {
+	let minutes = Math.floor(time / 60)
+	let seconds = Math.floor(time - minutes * 60)
+
+	return `${minutes}:${seconds.toString().padStart(2, '0')}`
+}
