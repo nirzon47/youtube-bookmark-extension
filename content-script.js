@@ -35,11 +35,11 @@ const init = async () => {
 	youtubeControls = document.getElementsByClassName('ytp-left-controls')[0]
 	youtubePlayer = document.getElementsByClassName('video-stream')[0]
 
-	youtubeControls.appendChild(timestampButton)
-
 	timestampButton.addEventListener('click', () => {
 		addBookmark()
 	})
+
+	youtubeControls.appendChild(timestampButton)
 }
 
 const fetchBookmarks = () => {
@@ -67,6 +67,11 @@ const addBookmark = async () => {
 
 	bookmarks.push(bookmark)
 	bookmarks.sort((o1, o2) => o1.time - o2.time)
+
+	if (!currentVideo) {
+		currentVideo = window.location.href.split('?v=')[1]
+	}
+
 	chrome.storage.sync.set({
 		[currentVideo]: JSON.stringify(bookmarks),
 	})
@@ -80,14 +85,17 @@ const getDescTime = (time) => {
 }
 
 chrome.runtime.onMessage.addListener((obj, sender, response) => {
-	const { type, videoId } = obj
+	const { type, videoId, time } = obj
 
 	if (type === 'newVideo') {
 		currentVideo = videoId
 		init()
-	} else if (type === 'play') {
-		youtubePlayer.currentTime = obj.time
-	} else if (type === 'delete') {
-		console.log('delete')
+	} else if (type === 'gotoTimestamp') {
+		youtubePlayer.currentTime = time
+	} else if (type === 'removeBookmark') {
+		bookmarks = bookmarks.filter((b) => b.time !== time)
+		chrome.storage.sync.set({
+			[currentVideo]: JSON.stringify(bookmarks),
+		})
 	}
 })
