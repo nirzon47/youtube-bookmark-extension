@@ -30,13 +30,22 @@ const renderBookmarks = (bookmarks = []) => {
 
 			const gotoBtn = document.createElement('button')
 			gotoBtn.classList.add('goto-btn')
-			gotoBtn.innerHTML = '<img src="assets/goto.svg" alt="Go to timestamp">'
+			gotoBtn.innerHTML =
+				'<img src="/assets/redirect.svg" alt="Go to timestamp">'
 
 			const delBtn = document.createElement('button')
 			delBtn.classList.add('del-btn')
-			delBtn.innerHTML = '<img src="assets/delete.svg" alt="Delete bookmark">'
+			delBtn.innerHTML = '<img src="/assets/delete.svg" alt="Delete bookmark">'
 
-			li.appendChild(gotoBtn, delBtn)
+			const div = document.createElement('div')
+			div.classList.add('btn-group')
+
+			div.appendChild(gotoBtn)
+			div.appendChild(delBtn)
+
+			li.appendChild(div)
+
+			bookmarkListElement.appendChild(li)
 		}
 	}
 }
@@ -51,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 		videoId
 	) {
 		chrome.storage.sync.get([videoId], (data) => {
-			const bookmarks = data[videoId] ? JSON.parse(data[videoId]) : []
+			let bookmarks = data[videoId] ? JSON.parse(data[videoId]) : []
 
 			renderBookmarks(bookmarks)
 		})
