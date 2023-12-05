@@ -86,7 +86,11 @@ const deleteBookmark = async (event) => {
 
 document.addEventListener('DOMContentLoaded', async () => {
 	const activeTab = await getTab()
-	const videoId = activeTab[0].url.split('?v=')[1]
+	let videoId = activeTab[0].url.split('?v=')[1]
+
+	if (videoId.includes('&t=')) {
+		videoId = videoId.split('&t=')[0]
+	}
 
 	if (
 		activeTab[0].url &&

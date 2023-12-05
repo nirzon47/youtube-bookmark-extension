@@ -63,6 +63,10 @@ const addBookmark = async () => {
 
 	if (!currentVideo) {
 		currentVideo = window.location.href.split('?v=')[1]
+
+		if (currentVideo.includes('&t=')) {
+			currentVideo = currentVideo.split('&t=')[0]
+		}
 	}
 
 	if (bookmarks.some((b) => b.time === bookmark.time)) {
@@ -89,6 +93,7 @@ chrome.runtime.onMessage.addListener((obj, sender, response) => {
 
 	if (type === 'newVideo') {
 		currentVideo = videoId
+		console.log(currentVideo)
 		init()
 	} else if (type === 'gotoTimestamp') {
 		youtubePlayer.currentTime = time
