@@ -1,9 +1,0 @@
-{
-  "dependencies": {},
-  "devDependencies": {
-    "daisyui": "^4.4.19",
-    "prettier": "^3.1.0",
-    "prettier-plugin-tailwindcss": "^0.5.7",
-    "tailwindcss": "^3.3.5"
-  }
-}
