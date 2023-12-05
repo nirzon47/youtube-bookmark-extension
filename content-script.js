@@ -61,16 +61,16 @@ const addBookmark = async () => {
 
 	bookmarks = await fetchBookmarks()
 
+	if (!currentVideo) {
+		currentVideo = window.location.href.split('?v=')[1]
+	}
+
 	if (bookmarks.some((b) => b.time === bookmark.time)) {
 		return
 	}
 
 	bookmarks.push(bookmark)
 	bookmarks.sort((o1, o2) => o1.time - o2.time)
-
-	if (!currentVideo) {
-		currentVideo = window.location.href.split('?v=')[1]
-	}
 
 	chrome.storage.sync.set({
 		[currentVideo]: JSON.stringify(bookmarks),
