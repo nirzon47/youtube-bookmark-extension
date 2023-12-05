@@ -56,7 +56,7 @@ const addBookmark = async () => {
 	const currentTime = youtubePlayer.currentTime
 	const bookmark = {
 		time: currentTime,
-		desc: `Bookmark at ${getDescTime(currentTime)}`,
+		desc: `${getDescTime(currentTime)}`,
 	}
 
 	bookmarks = await fetchBookmarks()

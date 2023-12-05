@@ -84,7 +84,36 @@ const deleteBookmark = async (event) => {
 	})
 }
 
+const themeHandler = () => {
+	if (
+		window.matchMedia &&
+		window.matchMedia('(prefers-color-scheme: dark)').matches
+	) {
+		document.documentElement.setAttribute('data-theme', 'dark')
+		document.getElementsByClassName('theme-controller')[0].checked = true
+	} else {
+		document.documentElement.setAttribute('data-theme', 'light')
+		document.getElementsByClassName('theme-controller')[0].checked = false
+	}
+}
+
+document
+	.getElementsByClassName('theme-controller')[0]
+	.addEventListener('click', () => {
+		const theme = document.documentElement.getAttribute('data-theme')
+
+		if (theme === 'light') {
+			document.documentElement.setAttribute('data-theme', 'dark')
+			themeController.checked = true
+		} else {
+			document.documentElement.setAttribute('data-theme', 'light')
+			themeController.checked = false
+		}
+	})
+
 document.addEventListener('DOMContentLoaded', async () => {
+	themeHandler()
+
 	const activeTab = await getTab()
 	let videoId = activeTab[0].url.split('?v=')[1]
 
