@@ -13,6 +13,10 @@ Working on adding the extension to chrome webstore, link will be updated...
 
 ## Changelog
 
+### 1.1
+
+- Removed unused host permissions
+
 ### 1.0
 
 - Initial release
