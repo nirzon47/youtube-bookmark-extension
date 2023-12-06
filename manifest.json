@@ -10,7 +10,6 @@
 		"48": "assets/icon.png"
 	},
 	"permissions": ["storage", "tabs"],
-	"host_permissions": ["https://*.youtube.com/*"],
 	"action": {
 		"default_popup": "popup/popup.html",
 		"default_icon": {
