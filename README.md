@@ -1,6 +1,6 @@
 # youtube-bookmark-extension
 
-Working on adding the extension to chrome webstore, link will be updated...
+## [Chrome Webstore Link](https://chromewebstore.google.com/detail/youtube-bookmarker/klmdcdoegkdbbpkbfaaflmadoiboplbl)
 
 ## Features
 
