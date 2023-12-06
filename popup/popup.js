@@ -1,14 +1,26 @@
+/**
+ * Retrieves the currently active tab in the Chrome browser.
+ *
+ * @return {Promise<chrome.tabs.Tab[]>} An array containing the currently active tab.
+ */
 const getTab = async () => {
 	let tab = await chrome.tabs.query({ active: true, currentWindow: true })
 
 	return tab
 }
 
+/**
+ * Renders the bookmarks on the page.
+ *
+ * @param {Array} bookmarks - An array of bookmark objects.
+ * @return {void} This function does not return any value.
+ */
 const renderBookmarks = (bookmarks = []) => {
 	const bookmarkListElement = document.getElementById('bookmark-list')
 
 	bookmarkListElement.innerHTML = ''
 
+	// If there are no bookmarks, display a message, otherwise display the bookmarks
 	if (bookmarks.length === 0) {
 		const p = document.createElement('p')
 		p.style.fontSize = '18px'
@@ -60,30 +72,51 @@ const renderBookmarks = (bookmarks = []) => {
 	}
 }
 
+/**
+ * Navigates to a specific timestamp in the browser tab.
+ *
+ * @param {Event} event - The event object triggered by the user action.
+ * @return {Promise<void>} - A promise that resolves when the navigation is complete.
+ */
 const gotoTimestamp = async (event) => {
+	// Gets the timestamp from the list element's timestamp attribute
 	const timestamp =
 		event.target.parentElement.parentElement.getAttribute('timestamp')
 	const tab = await getTab()
 
+	// Sends a message to the runtime to navigate to the timestamp
 	chrome.tabs.sendMessage(tab[0].id, {
 		type: 'gotoTimestamp',
 		time: parseFloat(timestamp),
 	})
 }
 
+/**
+ * Deletes a bookmark.
+ *
+ * @param {Event} event - The event that triggered the deletion.
+ * @return {Promise<void>} - A promise that resolves once the bookmark is deleted.
+ */
 const deleteBookmark = async (event) => {
 	const timestamp =
 		event.target.parentElement.parentElement.getAttribute('timestamp')
 	const tab = await getTab()
 
+	// Removes the bookmark from the DOM
 	event.target.parentElement.parentElement.remove()
 
+	// Sends a message to the runtime to delete the bookmark
 	chrome.tabs.sendMessage(tab[0].id, {
 		type: 'removeBookmark',
 		time: parseFloat(timestamp),
 	})
 }
 
+/**
+ * Handles the theme of the webpage based on user preferences.
+ *
+ * @return {void} This function does not return any value.
+ */
 const themeHandler = () => {
 	if (
 		window.matchMedia &&
@@ -97,10 +130,15 @@ const themeHandler = () => {
 	}
 }
 
+//  Event listeners
+
+// Theme controller
 document
 	.getElementsByClassName('theme-controller')[0]
 	.addEventListener('click', () => {
 		const theme = document.documentElement.getAttribute('data-theme')
+		const themeController =
+			document.getElementsByClassName('theme-controller')[0]
 
 		if (theme === 'light') {
 			document.documentElement.setAttribute('data-theme', 'dark')
@@ -111,21 +149,19 @@ document
 		}
 	})
 
+// Whenever the extension is clicked on
 document.addEventListener('DOMContentLoaded', async () => {
 	themeHandler()
 
 	const activeTab = await getTab()
-	let videoId = activeTab[0].url.split('?v=')[1]
 
-	if (videoId.includes('&t=')) {
-		videoId = videoId.split('&t=')[0]
-	}
+	if (activeTab[0].url && activeTab[0].url.includes('youtube.com/watch')) {
+		let videoId = activeTab[0].url.split('?v=')[1]
 
-	if (
-		activeTab[0].url &&
-		activeTab[0].url.includes('youtube.com/watch') &&
-		videoId
-	) {
+		if (videoId.includes('&t=')) {
+			videoId = videoId.split('&t=')[0]
+		}
+
 		chrome.storage.sync.get([videoId], (data) => {
 			let bookmarks = data[videoId] ? JSON.parse(data[videoId]) : []
 
